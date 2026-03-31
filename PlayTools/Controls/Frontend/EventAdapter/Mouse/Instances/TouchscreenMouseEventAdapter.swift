@@ -51,9 +51,16 @@ public class TouchscreenMouseEventAdapter: MouseEventAdapter {
 
     public func handleScrollWheel(deltaX: CGFloat, deltaY: CGFloat) -> Bool {
         _ = ActionDispatcher.dispatch(key: KeyCodeNames.scrollWheelDrag, valueX: deltaX, valueY: deltaY)
-        // I dont know why but this is the logic before the refactor.
-        // Might be a mistake but keeping it for now
-        return false
+        
+        let threshold: CGFloat = 0.5
+        var handled = false
+        if deltaY > threshold {
+            handled = ActionDispatcher.dispatchClick(key: "ScrU")
+        } else if deltaY < -threshold {
+            handled = ActionDispatcher.dispatchClick(key: "ScrD")
+        }
+        
+        return handled
     }
 
     public func handleMove(deltaX: CGFloat, deltaY: CGFloat) -> Bool {
