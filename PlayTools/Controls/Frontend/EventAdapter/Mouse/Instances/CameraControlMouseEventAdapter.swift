@@ -11,12 +11,7 @@ import Foundation
 
 public class CameraControlMouseEventAdapter: MouseEventAdapter {
     public func handleScrollWheel(deltaX: CGFloat, deltaY: CGFloat) -> Bool {
-        // Only attempt scroll-to-zoom if the feature is enabled
-        if PlaySettings.shared.enableScrollWheelZoom {
-            _ = ActionDispatcher.dispatch(key: KeyCodeNames.scrollWheelScale, valueX: deltaX, valueY: deltaY)
-        }
-        
-        // Only attempt scroll keymapping if the feature is enabled
+        // Priority 1: Keymapping. If enabled and triggered, consume the event.
         if PlaySettings.shared.enableScrollWheelMapping {
             let threshold: CGFloat = 0.5
             var handled = false
@@ -25,9 +20,17 @@ public class CameraControlMouseEventAdapter: MouseEventAdapter {
             } else if deltaY < -threshold {
                 handled = ActionDispatcher.dispatchClick(key: "ScrD")
             }
+            
+            // If mapping was triggered, return true to consume the event
             if handled {
                 return true
             }
+        }
+
+        // Priority 2: Zoom/Scale logic.
+        if PlaySettings.shared.enableScrollWheelZoom {
+            _ = ActionDispatcher.dispatch(key: KeyCodeNames.scrollWheelScale, valueX: deltaX, valueY: deltaY)
+            return true
         }
         
         return true

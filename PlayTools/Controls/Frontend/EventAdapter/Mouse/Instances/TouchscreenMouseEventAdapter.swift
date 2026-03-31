@@ -50,12 +50,7 @@ public class TouchscreenMouseEventAdapter: MouseEventAdapter {
     }
 
     public func handleScrollWheel(deltaX: CGFloat, deltaY: CGFloat) -> Bool {
-        // Only attempt scroll-to-zoom if the feature is enabled
-        if PlaySettings.shared.enableScrollWheelZoom {
-            _ = ActionDispatcher.dispatch(key: KeyCodeNames.scrollWheelDrag, valueX: deltaX, valueY: deltaY)
-        }
-        
-        // Only attempt scroll keymapping if the feature is enabled
+        // Priority 1: Keymapping. If enabled and triggered, consume the event.
         if PlaySettings.shared.enableScrollWheelMapping {
             let threshold: CGFloat = 0.5
             var handled = false
@@ -64,9 +59,19 @@ public class TouchscreenMouseEventAdapter: MouseEventAdapter {
             } else if deltaY < -threshold {
                 handled = ActionDispatcher.dispatchClick(key: "ScrD")
             }
+            
+            // If mapping was triggered, return true to consume the event
+            // and prevent it from reaching any other logic (like zoom).
             if handled {
                 return true
             }
+        }
+
+        // Priority 2: Zoom logic.
+        if PlaySettings.shared.enableScrollWheelZoom {
+            _ = ActionDispatcher.dispatch(key: KeyCodeNames.scrollWheelDrag, valueX: deltaX, valueY: deltaY)
+            // Generally return true after processing to keep behavior consistent
+            return true
         }
         
         return false
