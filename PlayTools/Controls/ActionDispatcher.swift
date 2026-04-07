@@ -48,7 +48,6 @@ public class ActionDispatcher {
     static public func build() {
         // 【物理仿真激活与游戏框架劫持】
         _ = GCVirtualGamepad.shared
-        PTGamepadHook.inject() // 执行 ObjC 层拦截
         
         clear()
 

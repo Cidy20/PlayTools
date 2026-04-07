@@ -9,17 +9,19 @@
 
 @implementation PTGamepadHook
 
-+ (void)inject {
++ (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class gcClass = [GCController class];
+        // 自动注入：在 PlayTools 框架加载时（早于游戏运行）立刻 Hook
+        Class gcClass = NSClassFromString(@"GCController");
+        if (!gcClass) return;
+        
         SEL originalSelector = @selector(controllers);
         SEL swizzledSelector = @selector(pt_controllers);
         
         Method originalMethod = class_getClassMethod(gcClass, originalSelector);
         Method swizzledMethod = class_getClassMethod(self, swizzledSelector);
         
-        // 由于是类方法 (Class Method)，我们需要操作 MetaClass
         Class metaClass = object_getClass(gcClass);
         BOOL didAddMethod = class_addMethod(metaClass,
                                             swizzledSelector,
@@ -35,21 +37,19 @@
             method_exchangeImplementations(originalMethod, swizzledMethod);
         }
         
-        NSLog(@"PlayTools: [SUCCESS] System +[GCController controllers] Hooked via Obj-C!");
+        NSLog(@"PlayTools: [SUCCESS] System +[GCController controllers] Hooked via +load!");
         
-        // 伪造系统级的“手柄接入广播”
-        // 延迟一下，确保游戏代码里的 NotificationCenter 监听器已经挂载好了
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 挂载一个延迟任务，在主线程启动后再发广播
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             Class virtualGamepadClass = NSClassFromString(@"GCVirtualGamepad");
             if (virtualGamepadClass) {
-                // 通过反射调用 Swift 的单例 shared
                 id sharedGamepad = [virtualGamepadClass performSelector:NSSelectorFromString(@"shared")];
                 if (sharedGamepad) {
                     NSArray *fakeControllers = [sharedGamepad performSelector:NSSelectorFromString(@"controllers")];
                     if (fakeControllers.count > 0) {
                         GCController *fake = fakeControllers.firstObject;
                         [[NSNotificationCenter defaultCenter] postNotificationName:GCControllerDidConnectNotification object:fake];
-                        NSLog(@"PlayTools: [SUCCESS] Broadcasted FAKE GCControllerDidConnectNotification to SDK.");
+                        NSLog(@"PlayTools: [SUCCESS] Broadcasted FAKE GCControllerDidConnectNotification!");
                     }
                 }
             }
