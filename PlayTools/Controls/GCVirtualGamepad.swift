@@ -4,7 +4,8 @@ import GameController
 /// 【插件中心：真·完美替身投射器】
 /// 通过手动修补苹果原生 GCController 实例的 _extendedGamepad Ivar 指针，
 /// 彻底解决网易 SDK 在进行 C++ 指针偏移探测时因 NULL 指针引发的 PC=0 崩溃。
-@objc public class GCVirtualGamepad: NSObject {
+@objc(GCVirtualGamepad)
+public class GCVirtualGamepad: NSObject {
     
     @objc public static let shared = GCVirtualGamepad()
     private var shieldedController: GCController?

@@ -46,6 +46,8 @@
 		95D474FB2C0BA77B0072797F /* JoystickElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D474FA2C0BA77B0072797F /* JoystickElement.swift */; };
 		95D474FF2C0BDAB20072797F /* DraggableButtonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D474FE2C0BDAB20072797F /* DraggableButtonElement.swift */; };
 		9BB707882F84CC7800B3F266 /* GCVirtualGamepad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB707872F84CC7800B3F266 /* GCVirtualGamepad.swift */; };
+		9BB7078B2F84D2B400B3F266 /* PTGamepadHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB7078A2F84D2B400B3F266 /* PTGamepadHook.m */; };
+		9BB7078C2F84D2B400B3F266 /* PTGamepadHook.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BB707892F84D2B400B3F266 /* PTGamepadHook.h */; };
 		AA71970B287A44D200623C15 /* PlayLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA719702287A44D200623C15 /* PlayLoader.m */; };
 		AA71970D287A44D200623C15 /* PlaySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA719704287A44D200623C15 /* PlaySettings.swift */; };
 		AA71970E287A44D200623C15 /* PlayLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = AA719705287A44D200623C15 /* PlayLoader.h */; };
@@ -144,6 +146,8 @@
 		95D474FA2C0BA77B0072797F /* JoystickElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickElement.swift; sourceTree = "<group>"; };
 		95D474FE2C0BDAB20072797F /* DraggableButtonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButtonElement.swift; sourceTree = "<group>"; };
 		9BB707872F84CC7800B3F266 /* GCVirtualGamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCVirtualGamepad.swift; sourceTree = "<group>"; };
+		9BB707892F84D2B400B3F266 /* PTGamepadHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTGamepadHook.h; sourceTree = "<group>"; };
+		9BB7078A2F84D2B400B3F266 /* PTGamepadHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTGamepadHook.m; sourceTree = "<group>"; };
 		AA7196D8287A447700623C15 /* PlayTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA719702287A44D200623C15 /* PlayLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayLoader.m; sourceTree = "<group>"; };
 		AA719704287A44D200623C15 /* PlaySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySettings.swift; sourceTree = "<group>"; };
@@ -465,6 +469,8 @@
 				AA719757287A480C00623C15 /* MenuController.swift */,
 				9BB707872F84CC7800B3F266 /* GCVirtualGamepad.swift */,
 				AA719755287A480C00623C15 /* PlayInput.swift */,
+				9BB707892F84D2B400B3F266 /* PTGamepadHook.h */,
+				9BB7078A2F84D2B400B3F266 /* PTGamepadHook.m */,
 				9562D16E2AB50D34002C329D /* ActionDispatcher.swift */,
 			);
 			path = Controls;
@@ -575,6 +581,7 @@
 				AA71986B287A81A000623C15 /* UIApplication+Private.h in Headers */,
 				AA71986D287A81A000623C15 /* PTFakeMetaTouch.h in Headers */,
 				AA719870287A81A000623C15 /* UIEvent+Private.h in Headers */,
+				9BB7078C2F84D2B400B3F266 /* PTGamepadHook.h in Headers */,
 				AA71970E287A44D200623C15 /* PlayLoader.h in Headers */,
 				AA719872287A81A000623C15 /* UITouch+Private.h in Headers */,
 			);
@@ -768,6 +775,7 @@
 				9562D1772AB52550002C329D /* EditorControllerEventAdapter.swift in Sources */,
 				AA7197A3287A481500623C15 /* CircleMenuButton.swift in Sources */,
 				9562D1582AB4FB9B002C329D /* TouchscreenKeyboardEventAdapter.swift in Sources */,
+				9BB7078B2F84D2B400B3F266 /* PTGamepadHook.m in Sources */,
 				9555ED312C058E28006E469C /* DebugModel.swift in Sources */,
 				AA7197A9287A481500623C15 /* PlayInfo.swift in Sources */,
 				AA71986A287A81A000623C15 /* PTFakeMetaTouch.m in Sources */,
