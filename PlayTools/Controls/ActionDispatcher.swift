@@ -46,6 +46,9 @@ public class ActionDispatcher {
 
     // This should be called whenever keymap may change
     static public func build() {
+        // 【物理仿真激活】
+        _ = GCVirtualGamepad.shared
+        
         clear()
 
         actions.append(FakeMouseAction())

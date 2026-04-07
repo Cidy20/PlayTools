@@ -45,6 +45,7 @@
 		9562D1792AB64458002C329D /* ModeAutomaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562D1782AB64458002C329D /* ModeAutomaton.swift */; };
 		95D474FB2C0BA77B0072797F /* JoystickElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D474FA2C0BA77B0072797F /* JoystickElement.swift */; };
 		95D474FF2C0BDAB20072797F /* DraggableButtonElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D474FE2C0BDAB20072797F /* DraggableButtonElement.swift */; };
+		9BB707882F84CC7800B3F266 /* GCVirtualGamepad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB707872F84CC7800B3F266 /* GCVirtualGamepad.swift */; };
 		AA71970B287A44D200623C15 /* PlayLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA719702287A44D200623C15 /* PlayLoader.m */; };
 		AA71970D287A44D200623C15 /* PlaySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA719704287A44D200623C15 /* PlaySettings.swift */; };
 		AA71970E287A44D200623C15 /* PlayLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = AA719705287A44D200623C15 /* PlayLoader.h */; };
@@ -142,6 +143,7 @@
 		9562D1782AB64458002C329D /* ModeAutomaton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeAutomaton.swift; sourceTree = "<group>"; };
 		95D474FA2C0BA77B0072797F /* JoystickElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickElement.swift; sourceTree = "<group>"; };
 		95D474FE2C0BDAB20072797F /* DraggableButtonElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButtonElement.swift; sourceTree = "<group>"; };
+		9BB707872F84CC7800B3F266 /* GCVirtualGamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCVirtualGamepad.swift; sourceTree = "<group>"; };
 		AA7196D8287A447700623C15 /* PlayTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA719702287A44D200623C15 /* PlayLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayLoader.m; sourceTree = "<group>"; };
 		AA719704287A44D200623C15 /* PlaySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySettings.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				9562D1712AB51B57002C329D /* Backend */,
 				9562D1702AB51B41002C329D /* Frontend */,
 				AA719757287A480C00623C15 /* MenuController.swift */,
+				9BB707872F84CC7800B3F266 /* GCVirtualGamepad.swift */,
 				AA719755287A480C00623C15 /* PlayInput.swift */,
 				9562D16E2AB50D34002C329D /* ActionDispatcher.swift */,
 			);
@@ -772,6 +775,7 @@
 				954389C62B3896E600B063BB /* ChildButton.swift in Sources */,
 				ABCECEE629750BA600746595 /* PlayedApple.swift in Sources */,
 				AA71986C287A81A000623C15 /* NSObject+Swizzle.m in Sources */,
+				9BB707882F84CC7800B3F266 /* GCVirtualGamepad.swift in Sources */,
 				AA71970F287A44D200623C15 /* PlayCover.swift in Sources */,
 				B127172528817C040025112B /* DiscordIPC.swift in Sources */,
 				AA719850287A81A000623C15 /* UITouch-KIFAdditions.m in Sources */,
