@@ -52,15 +52,32 @@ static NSArray<GCController *>* (*original_controllers)(id, SEL);
 
 // 这是替换系统 `+[GCController controllers]` 的李鬼方法
 + (NSArray<GCController *> *)pt_controllers {
-    // 强制调用保存的原实现 C 函数指针，绝对不可能造成死循环！
+    // 1. 设置当前线程防无限递归保护！
+    // 很多系统 API 或 Swift 初始化会间接触发 controllers，造成死循环
+    NSMutableDictionary *threadDict = [[NSThread currentThread] threadDictionary];
+    if ([threadDict objectForKey:@"pt_controllers_guard"]) {
+        // 如果发生递归返回，直接短路到原函数
+        if (original_controllers) {
+            Class gcClass = NSClassFromString(@"GCController");
+            return original_controllers(gcClass, _cmd);
+        }
+        return @[];
+    }
+    
+    // 设置访问锁
+    [threadDict setObject:@YES forKey:@"pt_controllers_guard"];
+    
+    // 2. 强制调用保存的原实现 C 函数指针
     NSArray<GCController *> *original = nil;
     if (original_controllers) {
-        original = original_controllers(self, _cmd);
+        // 【核心修复】必须传原本的 GCController 类作为上下文，而不是当前的 PTGamepadHook 类！
+        Class gcClass = NSClassFromString(@"GCController");
+        original = original_controllers(gcClass, _cmd);
     }
     
     NSMutableArray *mut = [NSMutableArray arrayWithArray:original ?: @[]];
     
-    // 动态调用 Swift 中的虚拟手柄
+    // 3. 动态调用 Swift 中的虚拟手柄
     Class virtualGamepadClass = NSClassFromString(@"GCVirtualGamepad");
     if (virtualGamepadClass) {
         id sharedGamepad = [virtualGamepadClass performSelector:NSSelectorFromString(@"shared")];
@@ -71,6 +88,9 @@ static NSArray<GCController *>* (*original_controllers)(id, SEL);
             }
         }
     }
+    
+    // 释放锁
+    [threadDict removeObjectForKey:@"pt_controllers_guard"];
     
     return [mut copy];
 }
