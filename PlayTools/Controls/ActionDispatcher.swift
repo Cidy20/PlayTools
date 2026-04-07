@@ -46,6 +46,10 @@ public class ActionDispatcher {
 
     // This should be called whenever keymap may change
     static public func build() {
+        // 【显式激活 Objective-C 底层劫持】
+        // 在这里激活，系统的 GameController 早就被 App/UIKit 初始化好载入了！
+        PTGamepadHook.activate()
+        
         // 【物理仿真激活与游戏框架劫持】
         _ = GCVirtualGamepad.shared
         
