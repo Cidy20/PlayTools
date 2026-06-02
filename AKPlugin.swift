@@ -153,7 +153,7 @@ class AKPlugin: NSObject, Plugin {
                 let currentMods = event.modifierFlags.intersection(.deviceIndependentFlagsMask).rawValue
                 let targetMods = UInt(self.forceTypingHotkeyModifiers)
                 let targetKeyCode = UInt16(self.forceTypingHotkeyKeyCode)
-                if event.keyCode == targetKeyCode && currentMods == targetMods {
+                if event.keyCode == targetKeyCode && currentMods == targetMods && !event.isARepeat {
                     if !self.isCameraRotate {
                         self.onHotkeyTriggered?()
                         return nil
