@@ -39,6 +39,9 @@ public class EditorMouseEventAdapter: MouseEventAdapter {
     private static var lastScrollTime: TimeInterval = 0
 
     public func handleScrollWheel(deltaX: CGFloat, deltaY: CGFloat) -> Bool {
+        guard PlaySettings.shared.enableScrollWheelMapping else {
+            return false
+        }
         let currentTime = ProcessInfo.processInfo.systemUptime
         // 阈值判断：deltaY 绝对值需大于 0.2 以防极小干扰，且 0.3s 内不重复触发
         if abs(deltaY) > 0.2 && (currentTime - EditorMouseEventAdapter.lastScrollTime) > 0.3 {
