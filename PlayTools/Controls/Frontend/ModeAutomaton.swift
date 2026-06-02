@@ -61,4 +61,23 @@ public class ModeAutomaton {
         }
         mode.set(.arbitraryClick)
     }
+
+    static private var previousMode: ControlModeLiteral = .arbitraryClick
+
+    static public func onToggleTextInput() {
+        if mode == .cameraRotate {
+            // 防御性拦截：如果是视角锁定模式，不应允许激活强制打字模式以防误触
+            return
+        }
+        if mode == .textInput {
+            mode.set(previousMode)
+            Toucher.writeLog(logMessage: "Text input mode manually OFF. Restored to: \(previousMode)")
+            Toast.showHint(title: "打字模式已关闭", text: ["按键映射已恢复"])
+        } else {
+            previousMode = mode.currentMode
+            mode.set(.textInput)
+            Toucher.writeLog(logMessage: "Text input mode manually ON. Suspended mode: \(previousMode)")
+            Toast.showHint(title: "打字模式已开启", text: ["按键映射已挂起，可正常打字"])
+        }
+    }
 }

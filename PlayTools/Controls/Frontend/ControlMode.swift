@@ -22,6 +22,10 @@ public class ControlMode: Equatable {
 
     private var controlMode = ControlModeLiteral.off
 
+    public var currentMode: ControlModeLiteral {
+        return controlMode
+    }
+
     private var keyboardAdapter: KeyboardEventAdapter!
     private var mouseAdapter: MouseEventAdapter!
     private var controllerAdapter: ControllerEventAdapter!
@@ -90,6 +94,15 @@ public class ControlMode: Equatable {
     }
 
     private func setupKeyboard() {
+        if let interface = AKInterface.shared {
+            interface.forceTypingHotkeyEnabled = settings.forceTypingHotkeyEnabled
+            interface.forceTypingHotkeyKeyCode = settings.forceTypingHotkeyKeyCode
+            interface.forceTypingHotkeyModifiers = settings.forceTypingHotkeyModifiers
+            interface.isCameraRotate = (controlMode == .cameraRotate)
+            interface.onHotkeyTriggered = {
+                ModeAutomaton.onToggleTextInput()
+            }
+        }
         AKInterface.shared!.setupKeyboard(
             keyboard: { keycode, pressed, isRepeat, ctrlModified in
                 self.keyboardAdapter.handleKey(
@@ -172,6 +185,7 @@ public class ControlMode: Equatable {
         mouseAdapter = EventAdapters.mouse(controlMode: mode)
         controllerAdapter = EventAdapters.controller(controlMode: mode)
         controlMode = mode
+        AKInterface.shared?.isCameraRotate = (mode == .cameraRotate)
         if !first {
 //            Toast.showHint(title: "should hide cursor? \(mouseAdapter.cursorHidden())",
 //                       text: ["current state: " + mode])

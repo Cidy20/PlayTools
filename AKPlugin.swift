@@ -128,6 +128,12 @@ class AKPlugin: NSObject, Plugin {
         NSApplication.shared.terminate(self)
     }
 
+    @objc public var forceTypingHotkeyEnabled = false
+    @objc public var forceTypingHotkeyKeyCode = 120
+    @objc public var forceTypingHotkeyModifiers = 1048576
+    @objc public var isCameraRotate = false
+    @objc public var onHotkeyTriggered: (() -> Void)?
+
     private var modifierFlag: UInt = 0
 
     // swiftlint:disable:next function_body_length
@@ -143,6 +149,17 @@ class AKPlugin: NSObject, Plugin {
             return false
         }
         NSEvent.addLocalMonitorForEvents(matching: .keyDown, handler: { event in
+            if self.forceTypingHotkeyEnabled {
+                let currentMods = event.modifierFlags.intersection(.deviceIndependentFlagsMask).rawValue
+                let targetMods = UInt(self.forceTypingHotkeyModifiers)
+                let targetKeyCode = UInt16(self.forceTypingHotkeyKeyCode)
+                if event.keyCode == targetKeyCode && currentMods == targetMods {
+                    if !self.isCameraRotate {
+                        self.onHotkeyTriggered?()
+                        return nil
+                    }
+                }
+            }
             if checkCmd(modifier: event.modifierFlags) {
                 return event
             }
@@ -154,6 +171,16 @@ class AKPlugin: NSObject, Plugin {
             return event
         })
         NSEvent.addLocalMonitorForEvents(matching: .keyUp, handler: { event in
+            if self.forceTypingHotkeyEnabled {
+                let currentMods = event.modifierFlags.intersection(.deviceIndependentFlagsMask).rawValue
+                let targetMods = UInt(self.forceTypingHotkeyModifiers)
+                let targetKeyCode = UInt16(self.forceTypingHotkeyKeyCode)
+                if event.keyCode == targetKeyCode && currentMods == targetMods {
+                    if !self.isCameraRotate {
+                        return nil
+                    }
+                }
+            }
             if checkCmd(modifier: event.modifierFlags) {
                 return event
             }

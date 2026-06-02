@@ -31,4 +31,10 @@ public protocol Plugin: NSObjectProtocol {
     func setupScrollWheel(_ onMoved: @escaping (CGFloat, CGFloat) -> Bool)
     func urlForApplicationWithBundleIdentifier(_ value: String) -> URL?
     func setMenuBarVisible(_ value: Bool)
+
+    var forceTypingHotkeyEnabled: Bool { get set }
+    var forceTypingHotkeyKeyCode: Int { get set }
+    var forceTypingHotkeyModifiers: Int { get set }
+    var isCameraRotate: Bool { get set }
+    var onHotkeyTriggered: (() -> Void)? { get set }
 }

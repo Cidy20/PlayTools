@@ -96,6 +96,10 @@ let settings = PlaySettings.shared
     @objc lazy var disableBuiltinMouse = settingsData.disableBuiltinMouse
 
     @objc lazy var blockSleepSpamming = settingsData.blockSleepSpamming
+
+    @objc lazy var forceTypingHotkeyEnabled = settingsData.forceTypingHotkeyEnabled
+    @objc lazy var forceTypingHotkeyKeyCode = settingsData.forceTypingHotkeyKeyCode
+    @objc lazy var forceTypingHotkeyModifiers = settingsData.forceTypingHotkeyModifiers
 }
 
 struct AppSettingsData: Codable {
@@ -121,6 +125,9 @@ struct AppSettingsData: Codable {
     var noKMOnInput = false
     var enableScrollWheelZoom = true // Original zoom logic
     var enableScrollWheelMapping = false // New keymapping logic
+    var forceTypingHotkeyEnabled = false
+    var forceTypingHotkeyKeyCode = 120
+    var forceTypingHotkeyModifiers = 1048576
     var hideTitleBar = false
     var floatingWindow = false
     var checkMicPermissionSync = false
